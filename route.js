@@ -3,6 +3,7 @@ var pathRegExp = require('path-to-regexp')
   , Runner
   , methods = require('methods')
   , url = require('url')
+  , minimatch = require('minimatch')
 
 // Cached parsed urls.
 function parseUrl (req) {
@@ -18,6 +19,7 @@ function Route (args) {
   this.methods = [];
   this.handlers = [];
   this.options = {};
+  this.hosts = [];
   var self = this;
 
   [].slice.call(args).forEach(function (arg) {
@@ -43,6 +45,10 @@ function Route (args) {
         if (~methods.indexOf(arg.toLowerCase())) {
           // HTTP method
           self.methods.push(arg);
+        }
+        else {
+          // host matcher
+          self.hosts.push(arg);
         }
       }
       else if (typeof arg === 'function') {
@@ -81,12 +87,14 @@ function Route (args) {
   // performance
   this.methodCount = this.methods.length;
   this.pathCount = this.paths.length;
+  this.hostCount = this.hosts.length;
 }
 module.exports = Route;
 
-function inArray (val, arr, length) {
+function inArray (val, arr, length, useMatch) {
   if (!arr || !length) return false;
   for (var idx = 0; idx < length; idx++) {
+    if (useMatch && minimatch(val, arr[idx])) return true;
     if (arr[idx] === val) return true;
   }
   return false;
@@ -103,6 +111,14 @@ Route.prototype.match = function (req) {
   if (this.methodCount && req.method !== 'HEAD' && !inArray(req.method, this.methods, this.methodCount)) {
     debug('wrong method', req.method, req.url);
     return false;
+  }
+  if (this.hostCount && req.headers.host) {
+    if (!req._parsedHost) req._parsedHost = req.headers.host.split(':');
+    // minimatch
+    if (!inArray(req._parsedHost[0], this.hosts, this.hostCount, true)) {
+      debug('wrong method', req.method, req.url);
+      return false;
+    }
   }
   if (!this.pathCount) {
     debug('match: no paths', req.method, req.url);
