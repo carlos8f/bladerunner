@@ -1,9 +1,9 @@
 # bladerunner
 
-bladerunner is a rewrite of [middler](https://www.npmjs.org/package/middler) to
-make it suitable for both HTTP and stack-based transforms:
+bladerunner is a rewrite of [middler](https://www.npmjs.org/package/middler) which
+is additionally usable for generic stack-based transforms (in a non-HTTP scenario):
 
-```
+```js
 var bladerunner = require('bladerunner');
 
 var runner = bladerunner()
