@@ -1,0 +1,20 @@
+{
+  "name": "bladerunner",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec --require test/common.js"
+  },
+  "author": "Carlos Rodriguez <carlos@s8f.org> (http://s8f.org/)",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^2.1.0",
+    "methods": "^1.1.0",
+    "path-to-regexp": "0.0.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.1",
+    "superagent": "^0.20.0"
+  }
+}
