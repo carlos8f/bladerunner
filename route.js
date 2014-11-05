@@ -12,7 +12,6 @@ function parseUrl (req) {
   return req._parsedUrl = url.parse(req.url);
 };
 
-
 function Route (args) {
   this.weight = 0;
   this.paths = [];
@@ -112,7 +111,7 @@ Route.prototype.match = function (req) {
     debug('wrong method', req.method, req.url);
     return false;
   }
-  if (this.hostCount && req.headers.host) {
+  if (this.hostCount && req.headers && req.headers.host) {
     if (!req._parsedHost) req._parsedHost = req.headers.host.split(':');
     // minimatch
     if (!inArray(req._parsedHost[0], this.hosts, this.hostCount, true)) {

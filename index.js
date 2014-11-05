@@ -2,6 +2,7 @@ var Route = require('./route')
   , inherits = require('util').inherits
   , EventEmitter = require('events').EventEmitter
   , methods = require('methods')
+  , url = require('url')
 
 function Runner () {
   this.routes = [];
@@ -13,6 +14,25 @@ module.exports = function () {
   return new Runner();
 };
 module.exports.Runner = Runner;
+
+Runner.prototype.run = function (options, cb) {
+  if (typeof options === 'function') {
+    cb = options;
+    options = {};
+  }
+  options || (options = {});
+  if (typeof options === 'string') options = {url: options};
+  var req = options.req || {};
+  req.method || (req.method = options.method || 'GET');
+  req.url || (req.url = options.url || '/');
+  req.query = url.parse(req.url, true).query;
+  req.host || (req.host = options.host || 'localhost');
+  var res = options.res || {};
+  this.handler(req, res, function (err) {
+    if (err) return cb(err);
+    cb(null, res);
+  });
+};
 
 Runner.prototype.handler = function (req, res, next) {
   var debug = require('debug')('bladerunner:runner:handler');
