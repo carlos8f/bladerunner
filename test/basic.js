@@ -13,7 +13,8 @@ describe('basic test', function () {
       res.end('hello world');
     });
 
-    request.get('http://localhost:' + port + '/', function (res) {
+    request.get('http://localhost:' + port + '/', function (err, res) {
+      assert.ifError(err);
       assert.equal(res.statusCode, 200);
       assert.equal(res.headers['content-type'], 'text/plain; charset=utf-8');
       assert.equal(res.text, 'hello world');

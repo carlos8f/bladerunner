@@ -9,10 +9,10 @@
   "author": "Carlos Rodriguez <carlos@s8f.org> (http://s8f.org/)",
   "license": "MIT",
   "dependencies": {
-    "debug": "^2.1.0",
-    "methods": "^1.1.0",
-    "minimatch": "^1.0.0",
-    "path-to-regexp": "0.0.2"
+    "debug": "^2.2.0",
+    "methods": "^1.1.2",
+    "minimatch": "^3.0.0",
+    "path-to-regexp": "^1.2.1"
   },
   "keywords": [
     "middleware",
@@ -20,7 +20,7 @@
     "server"
   ],
   "devDependencies": {
-    "mocha": "^2.0.1",
-    "superagent": "^0.20.0"
+    "mocha": "^2.4.5",
+    "superagent": "^1.8.3"
   }
 }
