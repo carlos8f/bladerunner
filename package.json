@@ -1,6 +1,6 @@
 {
   "name": "bladerunner",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "request router for HTTP or complex async tasks",
   "main": "index.js",
   "scripts": {
