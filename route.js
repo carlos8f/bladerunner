@@ -54,7 +54,7 @@ function Route (args) {
         // handler
         self.handlers.push(arg);
       }
-      else if (typeof arg && arg.constructor === Object) {
+      else if (toString.call(arg) === '[object Object]') {
         Object.keys(arg).forEach(function (k) {
           self.options[k] = arg[k];
         });
