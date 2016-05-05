@@ -12,8 +12,12 @@ function parseUrl (req) {
   return req._parsedUrl = url.parse(req.url);
 };
 
+// Global incremented id for sorting.
+var globalId = 0;
+
 function Route (args) {
   this.weight = 0;
+  this.id = globalId++;
   this.paths = [];
   this.methods = [];
   this.handlers = [];
